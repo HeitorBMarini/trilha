@@ -69,7 +69,12 @@ export function buildInsights(raw: RawStats) {
   const explicitShare = tracks.length ? tracks.filter((t) => t.explicit).length / tracks.length : 0;
   const trackArtistCount = new Map<string, number>();
   tracks.forEach((t) => t.artists.forEach((a) => trackArtistCount.set(a.name, (trackArtistCount.get(a.name) ?? 0) + 1)));
-  const [loyalName, loyalCount] = [...trackArtistCount.entries()].sort((a, b) => b[1] - a[1])[0] ?? ["", 0];
+  const artistRanking = [...trackArtistCount.entries()].sort((a, b) => b[1] - a[1]);
+  const [loyalName, loyalCount] = artistRanking[0] ?? ["", 0];
+  // Plano B para os gêneros (que o Spotify deixou de enviar em 2026): quanto do top vem de cada artista.
+  const artistShare = artistRanking
+    .slice(0, 6)
+    .map(([name, count]) => ({ name, share: tracks.length ? count / tracks.length : 0 }));
   const avgYear = tracks.length
     ? Math.round(tracks.reduce((s, t) => s + Number(t.album.release_date.slice(0, 4)), 0) / tracks.length)
     : null;
@@ -83,6 +88,7 @@ export function buildInsights(raw: RawStats) {
     tracks: tracks.slice(0, 10),
     playlistUris: tracks.slice(0, 30).map((t) => t.uri),
     genres,
+    artistShare,
     decades,
     topDecade,
     hours,

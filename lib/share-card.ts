@@ -128,7 +128,11 @@ export async function renderShareCard(insights: Insights, userName: string, rang
 
   // Rodapé com destaques
   const chips = [
-    insights.genres[0] ? `Gênero: ${insights.genres[0].name}` : null,
+    insights.genres[0]
+      ? `Gênero: ${insights.genres[0].name}`
+      : insights.facts.loyal && insights.facts.loyal.count > 1
+        ? `Mais fiel: ${insights.facts.loyal.name}`
+        : null,
     insights.topDecade ? `Década: ${insights.topDecade.label}` : null,
     insights.facts.recentCount ? `Ouve mais ${insights.period}` : null,
   ].filter(Boolean) as string[];

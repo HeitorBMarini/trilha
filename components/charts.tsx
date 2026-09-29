@@ -6,8 +6,9 @@ import type { Insights } from "@/lib/stats";
 
 const pct = (v: number) => `${Math.round(v * 100)}%`;
 
-export function GenresChart({ genres }: { genres: Insights["genres"] }) {
-  const data = genres.map((g) => ({ genre: g.name, share: Math.round(g.share * 100) }));
+/** Barras horizontais de participação (%), usadas para gêneros ou, sem eles, para artistas no top. */
+export function ShareChart({ items, unit }: { items: { name: string; share: number }[]; unit: string }) {
+  const data = items.map((g) => ({ genre: g.name, share: Math.round(g.share * 100) }));
   const config = { share: { label: "Participação", color: "var(--chart-2)" } } satisfies ChartConfig;
 
   return (
@@ -15,7 +16,7 @@ export function GenresChart({ genres }: { genres: Insights["genres"] }) {
       <BarChart data={data} layout="vertical" margin={{ left: 8, right: 40 }}>
         <XAxis type="number" hide domain={[0, "dataMax"]} />
         <YAxis dataKey="genre" type="category" tickLine={false} axisLine={false} width={120} tick={{ fill: "var(--foreground)" }} />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel formatter={(v) => `${v}% dos seus artistas`} />} />
+        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel formatter={(v) => `${v}% ${unit}`} />} />
         <Bar dataKey="share" fill="var(--color-share)" radius={8}>
           <LabelList dataKey="share" position="right" formatter={(v) => `${v}%`} className="fill-muted-foreground" fontSize={12} />
         </Bar>

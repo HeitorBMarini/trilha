@@ -12,7 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Cover } from "./Cover";
-import { ClockChart, DecadesChart, GenresChart } from "./charts";
+import { ClockChart, DecadesChart, ShareChart } from "./charts";
 import { buildInsights, imageOf } from "@/lib/stats";
 import { renderShareCard } from "@/lib/share-card";
 import { encodeSnapshot, toSnapshot } from "@/lib/snapshot";
@@ -290,13 +290,31 @@ export function Dashboard({ data, mode, realDemo, range, onRangeChange, onExit }
         {/* Gráficos */}
         <div className="grid gap-6 lg:grid-cols-3">
           <Card className="rise" style={{ animationDelay: "200ms" }}>
-            <CardHeader>
-              <CardTitle>Gêneros</CardTitle>
-              <CardDescription>
-                {insights.genres.length ? `${insights.genres[0].name} lidera entre os seus artistas` : "O Spotify não informou gêneros para esses artistas"}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>{insights.genres.length ? <GenresChart genres={insights.genres} /> : null}</CardContent>
+            {insights.genres.length ? (
+              <>
+                <CardHeader>
+                  <CardTitle>Gêneros</CardTitle>
+                  <CardDescription>{insights.genres[0].name} lidera entre os seus artistas</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ShareChart items={insights.genres} unit="dos seus artistas" />
+                </CardContent>
+              </>
+            ) : (
+              <>
+                <CardHeader>
+                  <CardTitle>Quem domina o seu top</CardTitle>
+                  <CardDescription>
+                    {insights.artistShare[0]
+                      ? `${insights.artistShare[0].name} está em ${Math.round(insights.artistShare[0].share * 100)}% das suas top ${insights.playlistUris.length}`
+                      : "Artistas nas suas top músicas"}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ShareChart items={insights.artistShare} unit={`das suas top ${insights.playlistUris.length}`} />
+                </CardContent>
+              </>
+            )}
           </Card>
 
           <Card className="rise" style={{ animationDelay: "240ms" }}>
