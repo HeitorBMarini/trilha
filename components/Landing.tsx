@@ -47,7 +47,7 @@ export function Landing({ message, loginEnabled }: { message?: string; loginEnab
         </div>
         <p className="rise mt-3 text-xs text-muted-foreground" style={{ animationDelay: "300ms" }}>
           O Spotify libera o login só para contas cadastradas neste app (limite do modo de desenvolvimento). A demonstração
-          usa artistas fictícios.
+          mostra a trilha real do Heitor, criador do projeto.
         </p>
 
         <div className="rise mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-4" style={{ animationDelay: "380ms" }}>

@@ -13,7 +13,7 @@ Retrospectiva musical do Spotify em qualquer época do ano: seus artistas e mús
 
 ## Por que existe um modo demonstração
 
-Desde fevereiro de 2026, apps novos da Web API do Spotify ficam em modo de desenvolvimento: o dono precisa de Premium e **só 5 contas cadastradas manualmente** podem fazer login. Para qualquer visitante conseguir ver o projeto, a demonstração usa artistas fictícios ou, se existir, o arquivo `public/demo-snapshot.json` com uma retrospectiva real exportada pelo botão "Exportar para a demonstração".
+Desde fevereiro de 2026, apps novos da Web API do Spotify ficam em modo de desenvolvimento: o dono precisa de Premium e **só 5 contas cadastradas manualmente** podem fazer login. Para qualquer visitante conseguir ver o projeto, a demonstração usa o arquivo `public/demo-snapshot.json`, com a retrospectiva real do autor exportada pelo botão "Exportar para a demonstração" (sem o arquivo, ela usa artistas fictícios).
 
 ## Stack
 
